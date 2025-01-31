@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitLife Gym</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #333;
+            color: white;
+            padding: 20px;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #444;
+            padding: 10px;
+        }
+        nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        section {
+            padding: 20px;
+            margin: 20px auto;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            max-width: 600px;
+        }
+        .cta-button {
+            display: inline-block;
+            background-color: #ff6600;
+            color: white;
+            padding: 10px 20px;
+            margin-top: 10px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        .cta-button:hover {
+            background-color: #e55b00;
+        }
+        .hidden {
+            display: none;
+        }
+        input, button, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #ff6600;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #e55b00;
+        }
+        .comment-container {
+            text-align: left;
+            margin-top: 20px;
+        }
+        .comment-box {
+            background: #eee;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .delete-btn {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 2px 5px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .delete-btn:hover {
+            background-color: darkred;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Welcome to FitLife Gym</h1>
+        <p>Your Fitness Journey Starts Here</p>
+    </header>
+
+    <nav>
+        <a onclick="showPage('home')">Home</a>
+        <a onclick="showPage('membership')">Membership</a>
+        <a onclick="showPage('join')">Join Now</a>
+        <a onclick="showPage('comment')">Comment</a>
+    </nav>
+
+    <!-- Home Section -->
+    <section id="home">
+        <h2>Our Services</h2>
+        <p>🏋 Personal Training</p>
+        <p>🧘 Group Classes</p>
+        <p>🥗 Nutrition Coaching</p>
+        <a onclick="showPage('join')" class="cta-button">Join Now</a>
+    </section>
+
+    <!-- Membership Section -->
+    <section id="membership" class="hidden">
+        <h2>Membership Plans</h2>
+        <p>💲 Basic - $29.99/month</p>
+        <p>💲 Premium - $49.99/month</p>
+        <p>💲 Elite - $79.99/month</p>
+    </section>
+
+    <!-- Join Now Section (Sign-up Form) -->
+    <section id="join" class="hidden">
+        <h2>Sign Up for FitLife Gym</h2>
+        <form action="#" method="post">
+            <input type="text" name="name" placeholder="Full Name" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button type="submit">Join Now</button>
+        </form>
+    </section>
+
+    <!-- Comment Section -->
+    <section id="comment" class="hidden">
+        <h2>Leave a Comment</h2>
+        <input type="text" id="commentName" placeholder="Your Name" required>
+        <textarea id="commentText" placeholder="Write your comment here..." rows="4" required></textarea>
+        <button onclick="addComment()">Submit</button>
+        <div id="commentContainer" class="comment-container"></div>
+    </section>
+
+    <script>
+        function showPage(pageId) {
+            document.getElementById('home').classList.add('hidden');
+            document.getElementById('membership').classList.add('hidden');
+            document.getElementById('join').classList.add('hidden');
+            document.getElementById('comment').classList.add('hidden');
+
+            document.getElementById(pageId).classList.remove('hidden');
+        }
+
+        function addComment() {
+            let name = document.getElementById('commentName').value;
+            let comment = document.getElementById('commentText').value;
+            
+            if (name.trim() === "" || comment.trim() === "") {
+                alert("Please enter your name and comment!");
+                return;
+            }
+
+            let commentContainer = document.getElementById('commentContainer');
+
+            let commentBox = document.createElement('div');
+            commentBox.classList.add('comment-box');
+
+            let commentText = document.createElement('span');
+            commentText.innerHTML = `<strong>${name}:</strong> ${comment}`;
+
+            let deleteBtn = document.createElement('button');
+            deleteBtn.innerText = "Delete";
+            deleteBtn.classList.add('delete-btn');
+            deleteBtn.onclick = function() {
+                commentContainer.removeChild(commentBox);
+            };
+
+            commentBox.appendChild(commentText);
+            commentBox.appendChild(deleteBtn);
+            commentContainer.appendChild(commentBox);
+
+            document.getElementById('commentName').value = "";
+            document.getElementById('commentText').value = "";
+        }
+    </script>
+
+</body>
+</html>
